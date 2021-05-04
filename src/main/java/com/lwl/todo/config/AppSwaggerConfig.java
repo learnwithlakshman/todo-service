@@ -22,8 +22,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class AppSwaggerConfig {
 	private ApiInfo metaData() {
-		return new ApiInfoBuilder().title("IPL-2020 Statistics")
-				.description("\"Spring Boot REST API for IPL-2020 Statistics\"").version("1.0.0").build();
+		return new ApiInfoBuilder().title("TODO Application")
+				.description("\"Spring Boot REST API for TODO\"").version("1.0.0").build();
 	}
 	
 	@Bean
