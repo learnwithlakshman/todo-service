@@ -31,7 +31,8 @@ public class TodoServiceImpl implements TodoService {
 		Optional<Todo> optTodo = todoRepo.findById(id);
 		if (optTodo.isPresent()) {
 			Todo todo = optTodo.get();
-			todoRepo.deleteById(todo.getId());
+			todo.setStatus(false);
+			todoRepo.save(todo);
 			log.info("Todo is deleted with id:{}", todo.getId());
 			return true;
 		} else {
@@ -71,6 +72,13 @@ public class TodoServiceImpl implements TodoService {
 			throw new TaskNotFoundException("Task with id:" + id + " is not found");
 		}
 
+	}
+
+	@Override
+	public List<Todo> getArchivedTodos(String username) {
+		List<Todo> taskList = todoRepo.findByUsernameAndStatus(username, false);
+		log.info("Total {} active tasks found for user {}", taskList.size(), username);
+		return taskList;
 	}
 
 }

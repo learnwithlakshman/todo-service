@@ -15,7 +15,7 @@ public class Todo {
 		private String id;
 		private String taskTitle;
 		private String description;
-		private boolean status=true;
 		private LocalDate targetDate;
+		private boolean status=true;
 		private String username;
 }

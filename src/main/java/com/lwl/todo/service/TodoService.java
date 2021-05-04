@@ -14,5 +14,7 @@ public interface TodoService {
 
 	public List<Todo> getTodosByUsername(String username);
 
+	public List<Todo> getArchivedTodos(String username);
+
 	public Todo getTodoById(String id);
 }

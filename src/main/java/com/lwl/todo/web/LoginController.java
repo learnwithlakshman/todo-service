@@ -1,5 +1,6 @@
 package com.lwl.todo.web;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.lwl.todo.auth.config.JwtUtil;
 import com.lwl.todo.auth.domain.AuthResponse;
 import com.lwl.todo.auth.domain.User;
+import com.lwl.todo.auth.dto.UserDTO;
 import com.lwl.todo.auth.service.AuthUserService;
 import com.lwl.todo.auth.service.exception.UserAlreadyExistsException;
 
@@ -40,10 +42,14 @@ public class LoginController {
 	
 	@Autowired
 	private JwtUtil jwtUtil;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@PostMapping("/register")
-	public User registerUser(@RequestBody User user) {
+	public User registerUser(@RequestBody UserDTO userDto) {
 		try {
+		User user = modelMapper.map(userDto, User.class);
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		return userService.addUser(user);
 		}catch (UserAlreadyExistsException e) {
@@ -52,7 +58,7 @@ public class LoginController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody User user) throws Exception {
+	public ResponseEntity<?> login(@RequestBody UserDTO user) throws Exception {
 		authenticate(user.getUsername(), user.getPassword());
 		final UserDetails userDetails = authUserService.loadUserByUsername(user.getUsername());
 		final String token = jwtUtil.generateToken(userDetails);
