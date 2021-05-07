@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,8 +71,8 @@ public class TodoController {
 	
 	
 
-	@DeleteMapping("{id}")
-	public ResponseEntity<HttpStatus> deleteTodo(@RequestParam("id") String id) {
+	@DeleteMapping("/{id}")
+	public ResponseEntity<HttpStatus> deleteTodo(@PathVariable("id") String id) {
 		try {
 			boolean isDeleted = todoService.deleteTodo(id);
 			if (isDeleted)
